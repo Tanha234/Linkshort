@@ -36,7 +36,7 @@ const RedirectHandler = () => {
         if (shortCode) {
             checkAndRedirect();
         }
-    }, [shortCode]);
+    }, [shortCode, API_URL]);
 
     if (loading) {
         return (

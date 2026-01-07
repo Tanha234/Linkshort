@@ -57,6 +57,7 @@ const Dashboard = () => {
     fetchUrls();
     const interval = setInterval(fetchUrls, 5000); // Polling for real-time updates
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // -------------------------
