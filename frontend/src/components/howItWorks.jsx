@@ -25,12 +25,12 @@ const HowItWorks = () => {
     <section className="bg-[#fff8e7] py-24 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16">
-          
+
           {/* Left Side: The Visual Anchor */}
           <div className="w-full lg:w-1/2 relative">
             {/* Unique Decorative Element: Rotating dashed circle */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border-2 border-dashed border-[#E2852E]/20 rounded-full animate-spin-slow"></div>
-            
+
             <div className="relative z-10 p-4 bg-white rounded-[2rem] shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700">
               <img
                 src={howItWorksImg}
@@ -59,8 +59,8 @@ const HowItWorks = () => {
               <div className="absolute left-[39px] top-4 bottom-4 w-px bg-gray-200 hidden md:block"></div>
 
               {steps.map((step, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="group relative flex items-start gap-8 py-8 transition-all duration-300"
                 >
                   {/* The Number - Outlined Style */}
@@ -89,15 +89,7 @@ const HowItWorks = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes spin-slow {
-          from { transform: translate(-50%, -50%) rotate(0deg); }
-          to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
-        }
-      `}</style>
+
     </section>
   );
 };

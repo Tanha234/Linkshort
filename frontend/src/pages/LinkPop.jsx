@@ -5,12 +5,12 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import heroImage from "../images/short-url.png";
 import { getAuth } from "firebase/auth";
-import { 
-  FaCopy, 
-  FaExternalLinkAlt, 
-  FaTwitter, 
-  FaWhatsapp, 
-  FaFacebook, 
+import {
+  FaCopy,
+  FaExternalLinkAlt,
+  FaTwitter,
+  FaWhatsapp,
+  FaFacebook,
   FaMagic,
   FaCut
 } from "react-icons/fa";
@@ -48,7 +48,7 @@ const ShortUrlGenerator = () => {
 
     try {
       const code = generateShortCode();
-      const fullShortUrl = `${API_URL}/${code}`;
+      const fullShortUrl = `${window.location.origin}/${code}`;
 
       const res = await axios.post(`${API_URL}/api/urls`, {
         originalUrl: longUrl,
@@ -97,12 +97,12 @@ const ShortUrlGenerator = () => {
   return (
     <div className="min-h-screen w-full bg-[#fff8e7] relative overflow-hidden flex items-center justify-center p-6 font-sans text-slate-700">
       {/* Background blobs */}
-      <motion.div 
+      <motion.div
         animate={{ x: [0, 30, 0], y: [0, 50, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -top-20 -left-20 w-96 h-96 bg-[#E2852E]/10 rounded-full blur-3xl"
       />
-      <motion.div 
+      <motion.div
         animate={{ x: [0, -40, 0], y: [0, -60, 0], scale: [1, 1.2, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"
@@ -110,7 +110,7 @@ const ShortUrlGenerator = () => {
 
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center z-10">
         {/* Hero Image */}
-        <motion.div 
+        <motion.div
           animate={{ y: [0, -20, 0], rotate: [0, 1, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="hidden md:flex justify-center"
@@ -121,7 +121,7 @@ const ShortUrlGenerator = () => {
         {/* Main Content */}
         <div className="flex flex-col space-y-8">
           <header className="space-y-4 text-center md:text-left">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               className="inline-flex items-center space-x-2 bg-white px-4 py-1 rounded-full shadow-sm w-fit mx-auto md:mx-0"
             >
@@ -130,7 +130,7 @@ const ShortUrlGenerator = () => {
               </motion.span>
               <span className="text-sm font-bold uppercase tracking-wider">Fast & Simple</span>
             </motion.div>
-            
+
             <h1 className="text-4xl md:text-5xl font-black leading-tight">
               Clip your <span className="text-[#E2852E]">links</span> in <br /> one click
             </h1>
@@ -138,7 +138,7 @@ const ShortUrlGenerator = () => {
 
           {/* Input Form */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl space-y-6">
-            <input 
+            <input
               type="text"
               placeholder="Paste long link here..."
               value={longUrl}
@@ -159,7 +159,7 @@ const ShortUrlGenerator = () => {
             <AnimatePresence>
               {shortUrl && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="space-y-4 pt-4">
-                  
+
                   {/* Short Code */}
                   <div className="bg-[#E2852E]/5 border border-[#E2852E]/20 p-4 rounded-2xl flex justify-between items-center relative overflow-hidden">
                     <div>
@@ -189,7 +189,7 @@ const ShortUrlGenerator = () => {
 
                   {/* Share Buttons */}
                   <div className="flex justify-center space-x-6 pt-4">
-                    {[ 
+                    {[
                       { icon: <FaFacebook />, color: "hover:text-blue-600", link: shareLinks.facebook },
                       { icon: <FaWhatsapp />, color: "hover:text-green-500", link: shareLinks.whatsapp },
                       { icon: <FaTwitter />, color: "hover:text-blue-400", link: shareLinks.twitter }

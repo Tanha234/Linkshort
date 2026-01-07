@@ -4,6 +4,7 @@ import Footer from "./pages/Footer";
 
 import Home from "./pages/Home";
 import About from "./pages/LinkPop";
+import RedirectHandler from "./components/RedirectHandler";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
@@ -35,6 +36,7 @@ function App() {
   </Route>
 
   {/* 404 */}
+  <Route path="/:shortCode" element={<RedirectHandler />} />
   <Route path="*" element={<NotFound />} />
 </Routes>
 

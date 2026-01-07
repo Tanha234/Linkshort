@@ -3,12 +3,13 @@ const router = express.Router();
 const Url = require("../models/Url");
 
 // Increment clicks
-router.post("/click/:shortCode", async (req, res) => {
+// Redirection route
+router.get("/:shortCode", async (req, res) => {
   try {
     const { shortCode } = req.params;
     const url = await Url.findOne({ shortCode });
 
-    if (!url) return res.status(404).json({ msg: "URL not found" });
+    if (!url) return res.status(404).send("URL not found");
 
     // Increment clicks
     url.clicks += 1;
@@ -19,10 +20,15 @@ router.post("/click/:shortCode", async (req, res) => {
 
     await url.save();
 
-    return res.json({ clicks: url.clicks });
+    // Redirect to original URL
+    let redirectUrl = url.originalUrl;
+    if (!/^https?:\/\//i.test(redirectUrl)) {
+      redirectUrl = "https://" + redirectUrl;
+    }
+    return res.redirect(redirectUrl);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "Failed to increment clicks" });
+    res.status(500).send("Server error");
   }
 });
 
