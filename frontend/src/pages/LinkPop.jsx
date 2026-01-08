@@ -190,6 +190,7 @@ const ShortUrlGenerator = () => {
                     <button onClick={() => copyToClipboard(shortCode)} className="p-3 hover:bg-[#E2852E] hover:text-white rounded-xl transition-colors">
                       <FaCopy />
                     </button>
+                    
                   </div>
 
                   {/* Short URL */}
