@@ -55,12 +55,14 @@ app.get("/api", (req, res) => {
 const redirectRoutes = require("./routes/redirect");
 const urlRoutes = require("./routes/urlRoutes");
 
-app.use("/api/urls", urlRoutes);
-app.use("/api/r", redirectRoutes);
+// These will match because vercel.json rewrites /api/(.*) to this app
+// So /api/urls becomes /urls here
+app.use("/urls", urlRoutes);
+app.use("/r", redirectRoutes);
 
-// Catch-all for undefined /api routes (Matches any /api prefix not caught above)
-app.use("/api", (req, res) => {
-    res.status(404).json({ error: "API route not found" });
+// Catch-all for undefined routes
+app.use((req, res) => {
+    res.status(404).json({ error: "Route not found inside backend" });
 });
 
 // Export the app for Vercel
