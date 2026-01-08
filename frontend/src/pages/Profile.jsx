@@ -32,6 +32,8 @@ const PerfectProfile = () => {
     { name: 'Sun', clicks: 430 },
   ];
 
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -39,8 +41,10 @@ const PerfectProfile = () => {
         setEmail(user.email || "");
 
         try {
-          const res = await axios.get(`http://localhost:5000/api/urls?userId=${user.uid}`);
-          setTotalLinks(res.data.length);
+          const res = await axios.get(`${API_URL}/api/urls?userId=${user.uid}`);
+          // Safety filter: ensure we only count links belonging to this user
+          const userLinks = res.data.filter(u => u.userId === user.uid);
+          setTotalLinks(userLinks.length);
         } catch (error) {
           console.error("Error fetching user links:", error);
         }

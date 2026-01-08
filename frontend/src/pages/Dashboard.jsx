@@ -29,36 +29,69 @@ import {
   Area
 } from "recharts";
 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 const Dashboard = () => {
   const [urls, setUrls] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   // Edit State
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const auth = getAuth(); // Initialize auth
 
-  // Fetch all URLs
-  const fetchUrls = async () => {
-    setLoading(true);
+  // Fetch URLs for specific user
+  const fetchUrls = async (currentUser, silent = false) => {
+    if (!currentUser) return;
+
+    if (!silent) setLoading(true);
     try {
-      const res = await axios.get(`${API_URL}/api/urls`);
-      setUrls(res.data);
+      console.log(`📡 DASHBOARD: Fetching links for UID: ${currentUser.uid} (Silent: ${silent})`);
+      const res = await axios.get(`${API_URL}/api/urls?userId=${currentUser.uid}`);
+
+      // Safety check: Filter on frontend too, just in case backend is stale
+      const filteredUrls = res.data.filter(u => u.userId === currentUser.uid);
+      if (filteredUrls.length !== res.data.length) {
+        console.warn("⚠️ BACKEND WARNING: Received links for other users! Backend filter is NOT working.");
+      }
+
+      setUrls(filteredUrls);
+      setLastUpdated(new Date().toLocaleTimeString());
     } catch (err) {
       console.error("Failed to fetch URLs", err);
-      // Silent error or toast
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUrls();
-    const interval = setInterval(fetchUrls, 5000); // Polling for real-time updates
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (!currentUser) {
+        setUrls([]);
+        setLoading(false);
+      }
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    // Initial fetch
+    fetchUrls(user);
+
+    // Set up polling
+    const interval = setInterval(() => {
+      fetchUrls(user, true); // Silent update
+    }, 5000);
+
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   // -------------------------
   // Analytics Calculations
@@ -184,9 +217,19 @@ const Dashboard = () => {
             </h1>
             <p className="text-slate-500 mt-2 font-medium ml-1">Overview</p>
           </div>
-          <button onClick={fetchUrls} className="bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all text-slate-600">
-            <RefreshCw size={20} className={loading ? "animate-spin" : ""} />
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="flex flex-col items-end">
+              <span className="text-xs text-slate-400 font-mono bg-white px-2 py-1 rounded-md border border-slate-100">
+                ID: {user ? user.uid.slice(0, 6) + "..." : "Guest"}
+              </span>
+              {lastUpdated && (
+                <span className="text-[10px] text-slate-400 mt-1">Updated: {lastUpdated}</span>
+              )}
+            </div>
+            <button onClick={() => user && fetchUrls(user)} className="bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all text-slate-600">
+              <RefreshCw size={20} className={loading ? "animate-spin" : ""} />
+            </button>
+          </div>
         </div>
 
         {/* Stats Grid */}

@@ -49,11 +49,15 @@ const ShortUrlGenerator = () => {
     try {
       // Check usage limits
       const checkRes = await axios.get(`${API_URL}/api/urls?userId=${user.uid}`);
-      if (checkRes.data.length >= 100) {
+
+      // Safety filter: Ensure we only count links belonging to THIS user
+      const userLinks = checkRes.data.filter(u => u.userId === user.uid);
+
+      if (userLinks.length >= 100) {
         Swal.fire({
           icon: "warning",
           title: "Usage Limit Reached",
-          text: "You have reached the free limit of 100 links. Please upgrade to create more!",
+          text: `You have reached the free limit of 100 links (Current: ${userLinks.length}). Please upgrade to create more!`,
           confirmButtonText: "Upgrade Now",
           confirmButtonColor: "#E2852E",
           showCancelButton: true,
@@ -68,12 +72,14 @@ const ShortUrlGenerator = () => {
       const code = generateShortCode();
       const fullShortUrl = `${window.location.origin}/${code}`;
 
+      console.log("🚀 SENDING POST /api/urls with UID:", user.uid);
       const res = await axios.post(`${API_URL}/api/urls`, {
         originalUrl: longUrl,
         userId: user.uid,
         shortCode: code,
         shortUrl: fullShortUrl,
       });
+      console.log("✅ SAVE SUCCESS:", res.data);
 
       setShortCode(res.data.shortCode);
       setShortUrl(res.data.shortUrl);
@@ -82,14 +88,16 @@ const ShortUrlGenerator = () => {
       Swal.fire({
         icon: "success",
         title: "URL Shortened!",
+        text: `Link created for user ${user.uid.slice(0, 6)}...`,
         toast: true,
         position: "top-end",
-        timer: 2000,
+        timer: 3000,
         showConfirmButton: false,
       });
     } catch (err) {
-      console.error(err);
-      Swal.fire("Error", "Failed to save URL", "error");
+      console.error("❌ SAVE FAILED:", err);
+      const errMsg = err.response?.data?.msg || err.message;
+      Swal.fire("Error", `Failed to save URL: ${errMsg}`, "error");
     }
   };
 

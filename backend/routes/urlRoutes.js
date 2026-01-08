@@ -3,11 +3,18 @@ const express = require("express");
 const router = express.Router();
 const Url = require("../models/Url");
 
+// Version Check
+router.get("/version", (req, res) => {
+  res.json({ version: "v2-isolated", status: "running corrected code" });
+});
+
 // Create a short URL
 router.post("/", async (req, res) => {
   try {
+    console.log("📥 RECEIVED POST /api/urls:", req.body);
     let { originalUrl, userId, shortCode, shortUrl } = req.body;
     if (!originalUrl || !userId || !shortCode || !shortUrl) {
+      console.warn("⚠️ MISSING FIELDS in POST:", { originalUrl: !!originalUrl, userId: !!userId, shortCode: !!shortCode, shortUrl: !!shortUrl });
       return res.status(400).json({ msg: "Missing fields" });
     }
 
@@ -37,10 +44,19 @@ router.get("/code/:shortCode", async (req, res) => {
 });
 
 
-// Get all URLs
+// Get all URLs (Filtered by User)
 router.get("/", async (req, res) => {
   try {
-    const urls = await Url.find().sort({ createdAt: -1 });
+    const { userId } = req.query;
+    
+    // Enforce User Isolation
+    if (!userId) {
+      return res.status(400).json({ msg: "User ID is required to fetch links" });
+    }
+
+    console.log(`🔍 Fetching links for user: ${userId}`); // Debug log
+
+    const urls = await Url.find({ userId }).sort({ createdAt: -1 });
     res.json(urls);
   } catch (err) {
     console.error(err);
