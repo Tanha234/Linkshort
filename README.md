@@ -1,11 +1,4 @@
 # LinkShort -  URL Shortener
-
-<<<<<<< HEAD
-![License](https://img.shields.io/badge/license-ISC-blue.svg)
-![React](https://img.shields.io/badge/frontend-React-61DAFB.svg)
-![Node](https://img.shields.io/badge/backend-Node.js-339933.svg)
-![Firebase](https://img.shields.io/badge/auth-Firebase-FFCA28.svg)
-
 ## 📖 Project Overview
 =======
 A modern, full-stack URL shortener application built with the MERN stack (MongoDB, Express, React, Node.js). It features a premium glassmorphism UI, advanced analytics, and user authentication via Firebase.
