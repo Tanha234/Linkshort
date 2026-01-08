@@ -37,11 +37,6 @@ We leverage **Firebase Authentication** to provide robust and secure identity ma
 -   **Email Verification**: (Supported by Firebase) Accounts are secure, and verification emails can be triggered to ensure valid user identities.
 -   **Session Management**: Persistent login sessions using Firebase's efficient observer pattern (`onAuthStateChanged`).
 
-<<<<<<< HEAD
----
-=======
->>>>>>> 64cabdfead50fcd9d1baf664de863c050f11e6b7
-
 ## 🚀 Setup Instructions
 
 ### Prerequisites
