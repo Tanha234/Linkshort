@@ -95,20 +95,24 @@ npm start
 ## 📂 Project Structure
 
 ```text
-/backend
-  ├── index.js          # Entry point (Serverless ready)
-  ├── routes/           # API Routes
-  │   ├── urlRoutes.js  # CRUD for URLs
-  │   └── redirect.js   # Handle short link redirections
-  └── models/           # Mongoose Data Models
-
-/frontend
-  ├── src/
-  │   ├── components/   # UI Components (Navbar, Pricing, Cards)
-  │   ├── pages/        # Pages (LinkPop, Dashboard, Profile, Login)
-  │   ├── App.js        # Main Router & Layout
-  │   └── styles/       # Tailwind configuration
-  └── package.json      # Dependencies (React, Framer Motion, Recharts)
+/
+├── backend/                # Server-side logic & API
+│   ├── config/             # Database configuration
+│   ├── models/             # Mongoose Data Models (Url.js)
+│   ├── routes/             # API Routes (urlRoutes.js, redirect.js)
+│   └── index.js            # Server entry point
+├── frontend/               # Client-side React application
+│   ├── public/             # Static assets
+│   ├── src/
+│   │   ├── components/     # Reusable UI Components
+│   │   ├── pages/          # Page-level Components
+│   │   ├── App.js          # Main Application Component & Routing
+│   │   └── index.js        # React entry point
+│   ├── tailwind.config.js  # Styling configuration
+│   └── package.json        # Frontend dependencies
+├── netlify.toml            # Netlify deployment configuration
+├── vercel.json             # Vercel deployment configuration
+└── README.md               # Project documentation
 ```
 
 ---
