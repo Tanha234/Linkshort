@@ -36,7 +36,7 @@ const redirectRoutes = require("./routes/redirect");
 const urlRoutes = require("./routes/urlRoutes");
 
 app.use("/api/urls", urlRoutes); // Order matters: specific routes first
-app.use("/", redirectRoutes);    // Catch-all redirect last
+app.use("/api/r", redirectRoutes);   // Changed from "/" to "/api/r" for Vercel compatibility
 
 // Export the app for Vercel
 module.exports = app;

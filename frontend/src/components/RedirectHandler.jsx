@@ -32,7 +32,7 @@ const RedirectHandler = () => {
                 clearInterval(progressInterval);
 
                 setTimeout(() => {
-                    window.location.href = `${API_URL}/${shortCode}`;
+                    window.location.href = `${API_URL}/api/r/${shortCode}`;
                 }, 400);
 
             } catch (err) {
