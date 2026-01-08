@@ -12,7 +12,8 @@ const RedirectHandler = () => {
     const [progress, setProgress] = useState(0);
     const hasStartedRef = React.useRef(false);
 
-    const API_URL = process.env.REACT_APP_API_URL || "https://linkshort-31ag.vercel.app";
+    const API_URL = process.env.REACT_APP_API_URL ||
+        (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
 
     useEffect(() => {
         if (!shortCode || hasStartedRef.current) return;

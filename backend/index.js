@@ -58,8 +58,8 @@ const urlRoutes = require("./routes/urlRoutes");
 app.use("/api/urls", urlRoutes);
 app.use("/api/r", redirectRoutes);
 
-// Catch-all for undefined /api routes
-app.use("/api/*", (req, res) => {
+// Catch-all for undefined /api routes (Matches any /api prefix not caught above)
+app.use("/api", (req, res) => {
     res.status(404).json({ error: "API route not found" });
 });
 
