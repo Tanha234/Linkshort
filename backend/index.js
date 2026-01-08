@@ -31,12 +31,22 @@ app.use(async (req, res, next) => {
     next();
 });
 
+// Health check / Status route
+app.get("/api", (req, res) => {
+    res.json({ status: "Backend is running", environment: process.env.NODE_ENV || "development" });
+});
+
 // Routes
 const redirectRoutes = require("./routes/redirect");
 const urlRoutes = require("./routes/urlRoutes");
 
-app.use("/api/urls", urlRoutes); // Order matters: specific routes first
-app.use("/api/r", redirectRoutes);   // Changed from "/" to "/api/r" for Vercel compatibility
+app.use("/api/urls", urlRoutes);
+app.use("/api/r", redirectRoutes);
+
+// Catch-all for undefined /api routes
+app.use("/api/*", (req, res) => {
+    res.status(404).json({ error: "API route not found" });
+});
 
 // Export the app for Vercel
 module.exports = app;
