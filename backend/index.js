@@ -28,7 +28,7 @@ const connectDB = async () => {
     }
 };
 
-// Middleware to ensure DB is connected before handling any request
+// Middleware to ensure DB is connected
 app.use(async (req, res, next) => {
     await connectDB();
     next();
@@ -37,24 +37,22 @@ app.use(async (req, res, next) => {
 // Redirect logic
 const redirectRoutes = require("./routes/redirect");
 app.use("/api/r", redirectRoutes);
-app.use("/r", redirectRoutes); // Fallback if prefix is stripped
 
 // API Routes
 const urlRoutes = require("./routes/urlRoutes");
 app.use("/api/urls", urlRoutes);
-app.use("/urls", urlRoutes); // Fallback if prefix is stripped
 
 // Health check
-app.get(["/api/health", "/health"], (req, res) => {
+app.get("/api/health", (req, res) => {
     res.json({ 
-        status: "Backend is running", 
+        status: "Backend is running (V3-Final)", 
         db: isConnected ? "connected" : "disconnected",
-        env: process.env.NODE_ENV || "development" 
+        env: process.env.NODE_ENV || "production" 
     });
 });
 
-app.get(["/api", "/api/root"], (req, res) => {
-    res.json({ message: "Welcome to the LinkShort API" });
+app.get("/api", (req, res) => {
+    res.json({ message: "Welcome to the LinkShort API (v3-Final)" });
 });
 
 // Catch-all for undefined /api routes
