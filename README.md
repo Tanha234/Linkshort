@@ -1,11 +1,16 @@
 # LinkShort -  URL Shortener
 
+<<<<<<< HEAD
 ![License](https://img.shields.io/badge/license-ISC-blue.svg)
 ![React](https://img.shields.io/badge/frontend-React-61DAFB.svg)
 ![Node](https://img.shields.io/badge/backend-Node.js-339933.svg)
 ![Firebase](https://img.shields.io/badge/auth-Firebase-FFCA28.svg)
 
 ## 📖 Project Overview
+=======
+A modern, full-stack URL shortener application built with the MERN stack (MongoDB, Express, React, Node.js). It features a premium glassmorphism UI, advanced analytics, and user authentication via Firebase.
+# 📖 Project Overview
+>>>>>>> 64cabdfead50fcd9d1baf664de863c050f11e6b7
 
 **LinkShort** is a sophisticated, full-stack URL shortening service designed with a focus on **visual aesthetics** and **user experience**. Unlike generic shorteners, LinkShort provides a premium "Glassmorphism" interface, detailed analytics, and a seamless flow for managing your digital footprint.
 
@@ -42,7 +47,10 @@ We leverage **Firebase Authentication** to provide robust and secure identity ma
 -   **Email Verification**: (Supported by Firebase) Accounts are secure, and verification emails can be triggered to ensure valid user identities.
 -   **Session Management**: Persistent login sessions using Firebase's efficient observer pattern (`onAuthStateChanged`).
 
+<<<<<<< HEAD
 ---
+=======
+>>>>>>> 64cabdfead50fcd9d1baf664de863c050f11e6b7
 
 ## 🚀 Setup Instructions
 

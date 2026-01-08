@@ -50,14 +50,10 @@ const Dashboard = () => {
 
     if (!silent) setLoading(true);
     try {
-      console.log(`📡 DASHBOARD: Fetching links for UID: ${currentUser.uid} (Silent: ${silent})`);
       const res = await axios.get(`${API_URL}/api/urls?userId=${currentUser.uid}`);
 
       // Safety check: Filter on frontend too, just in case backend is stale
       const filteredUrls = res.data.filter(u => u.userId === currentUser.uid);
-      if (filteredUrls.length !== res.data.length) {
-        console.warn("⚠️ BACKEND WARNING: Received links for other users! Backend filter is NOT working.");
-      }
 
       setUrls(filteredUrls);
       setLastUpdated(new Date().toLocaleTimeString());
@@ -218,14 +214,6 @@ const Dashboard = () => {
             <p className="text-slate-500 mt-2 font-medium ml-1">Overview</p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="flex flex-col items-end">
-              <span className="text-xs text-slate-400 font-mono bg-white px-2 py-1 rounded-md border border-slate-100">
-                ID: {user ? user.uid.slice(0, 6) + "..." : "Guest"}
-              </span>
-              {lastUpdated && (
-                <span className="text-[10px] text-slate-400 mt-1">Updated: {lastUpdated}</span>
-              )}
-            </div>
             <button onClick={() => user && fetchUrls(user)} className="bg-white p-3 rounded-xl shadow-sm hover:shadow-md transition-all text-slate-600">
               <RefreshCw size={20} className={loading ? "animate-spin" : ""} />
             </button>
