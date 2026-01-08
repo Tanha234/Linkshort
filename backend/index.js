@@ -12,6 +12,17 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Root Route - Helpful for Render/Vercel to show backend is alive
+app.get("/", (req, res) => {
+    res.json({ 
+        message: "LinkShort Backend API is running",
+        endpoints: {
+            health: "/api/health",
+            urls: "/api/urls"
+        }
+    });
+});
+
 // MongoDB Connection Strategy for Serverless
 let isConnected = false;
 const connectDB = async () => {
@@ -45,14 +56,14 @@ app.use("/api/urls", urlRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
     res.json({ 
-        status: "Backend is running (V3-Final)", 
+        status: "Backend is running", 
         db: isConnected ? "connected" : "disconnected",
         env: process.env.NODE_ENV || "production" 
     });
 });
 
 app.get("/api", (req, res) => {
-    res.json({ message: "Welcome to the LinkShort API (v3-Final)" });
+    res.json({ message: "Welcome to the LinkShort API" });
 });
 
 // Catch-all for undefined /api routes
