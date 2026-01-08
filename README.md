@@ -1,4 +1,4 @@
-# LinkShort - Premium URL Shortener
+# LinkShort -  URL Shortener
 
 ![License](https://img.shields.io/badge/license-ISC-blue.svg)
 ![React](https://img.shields.io/badge/frontend-React-61DAFB.svg)
