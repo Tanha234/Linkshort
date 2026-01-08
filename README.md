@@ -1,4 +1,4 @@
-# LinkShort - Premium URL Shortener
+# LinkShort -  URL Shortener
 
 A modern, full-stack URL shortener application built with the MERN stack (MongoDB, Express, React, Node.js). It features a premium glassmorphism UI, advanced analytics, and user authentication via Firebase.
 
