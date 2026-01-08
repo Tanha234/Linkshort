@@ -47,6 +47,24 @@ const ShortUrlGenerator = () => {
     }
 
     try {
+      // Check usage limits
+      const checkRes = await axios.get(`${API_URL}/api/urls?userId=${user.uid}`);
+      if (checkRes.data.length >= 100) {
+        Swal.fire({
+          icon: "warning",
+          title: "Usage Limit Reached",
+          text: "You have reached the free limit of 100 links. Please upgrade to create more!",
+          confirmButtonText: "Upgrade Now",
+          confirmButtonColor: "#E2852E",
+          showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/pricing";
+          }
+        });
+        return;
+      }
+
       const code = generateShortCode();
       const fullShortUrl = `${window.location.origin}/${code}`;
 

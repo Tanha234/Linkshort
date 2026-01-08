@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import heroImage from "../images/hero-bg1.png";
-import { Link, Heart } from "lucide-react"; // We'll use Heart as a butterfly replacement
+import { Link, Heart } from "lucide-react"; 
 
 const Hero = () => {
 

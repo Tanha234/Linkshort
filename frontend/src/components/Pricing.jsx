@@ -1,8 +1,30 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Pricing = () => {
   const navigate = useNavigate();
+
+  const handleUpgrade = () => {
+    Swal.fire({
+      title: 'Processing Payment...',
+      html: 'Securely connecting to payment gateway',
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Upgrade Successful!',
+          text: 'Welcome to the Premium Plan! You now have unlimited links.',
+          confirmButtonColor: '#E2852E'
+        });
+      }
+    });
+  };
 
   return (
     <section className="bg-[#fff8e7] py-24 px-6 overflow-hidden">
@@ -18,7 +40,7 @@ const Pricing = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-0">
-          
+
           {/* Free Plan */}
           <div className="w-full lg:w-1/3 bg-white/50 backdrop-blur-md p-10 rounded-t-[3rem] lg:rounded-l-[3rem] lg:rounded-tr-none border border-white/50 shadow-xl relative z-10">
             <div className="mb-8">
@@ -30,7 +52,7 @@ const Pricing = () => {
             </div>
 
             <ul className="space-y-4 mb-10">
-              {["50 Links / month", "Basic Analytics", "Standard Support", "7-day Link History"].map((feat) => (
+              {["100 Links / month", "Basic Analytics", "Standard Support", "7-day Link History"].map((feat) => (
                 <li key={feat} className="flex items-center gap-3 text-gray-600">
                   <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
@@ -41,7 +63,7 @@ const Pricing = () => {
             </ul>
 
             <button className="w-full py-4 px-8 rounded-2xl border-2 border-gray-200 font-bold text-gray-600 hover:bg-gray-50 transition-all">
-              Get Started
+              Current Plan
             </button>
           </div>
 
@@ -83,7 +105,7 @@ const Pricing = () => {
 
             {/* Upgrade Button */}
             <button
-              onClick={() => navigate("/coming-soon")}
+              onClick={handleUpgrade}
               className="w-full py-4 px-8 rounded-2xl bg-[#E2852E] text-white font-bold hover:bg-orange-600 transition-all"
             >
               Upgrade to Pro
