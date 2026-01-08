@@ -34,19 +34,18 @@ app.use(async (req, res, next) => {
     next();
 });
 
-// IMPORTANT: Do NOT define a route for "/" here.
-// Vercel should handle "/" via vercel.json and serve your React app.
-
-// Redirect logic: Handles short-links
+// Redirect logic
 const redirectRoutes = require("./routes/redirect");
 app.use("/api/r", redirectRoutes);
+app.use("/r", redirectRoutes); // Fallback if prefix is stripped
 
 // API Routes
 const urlRoutes = require("./routes/urlRoutes");
 app.use("/api/urls", urlRoutes);
+app.use("/urls", urlRoutes); // Fallback if prefix is stripped
 
 // Health check
-app.get("/api/health", (req, res) => {
+app.get(["/api/health", "/health"], (req, res) => {
     res.json({ 
         status: "Backend is running", 
         db: isConnected ? "connected" : "disconnected",
@@ -54,14 +53,19 @@ app.get("/api/health", (req, res) => {
     });
 });
 
-app.get("/api", (req, res) => {
+app.get(["/api", "/api/root"], (req, res) => {
     res.json({ message: "Welcome to the LinkShort API" });
 });
 
-// Catch-all for undefined routes
-app.use((req, res) => {
-    res.status(404).json({ error: "Route not found inside backend" });
+// Catch-all for undefined /api routes
+app.use("/api", (req, res) => {
+    res.status(404).json({ error: "API route not found" });
 });
+
+// IMPORTANT: Do NOT define a global catch-all app.use((req,res) => ...) here.
+// If a route doesn't match /api, we want Express to finish so Vercel can 
+// fall back to serving the static index.html if configured.
+
 
 // Export the app for Vercel
 module.exports = app;

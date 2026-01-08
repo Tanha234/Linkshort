@@ -19,7 +19,7 @@
             "destination": "/backend/index.js"
         },
         {
-            "source": "/((?!api/).*)",
+            "source": "/(.*)",
             "destination": "/index.html"
         }
     ]
