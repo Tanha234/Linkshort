@@ -12,57 +12,48 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Validate Environment Variables
-if (!process.env.MONGO_URI) {
-    console.warn("⚠️ MONGO_URI is not defined in environment variables.");
-}
-
-// Connect to MongoDB (Cached Connection with Timeout)
+// MongoDB Connection Strategy for Serverless
 let isConnected = false;
 const connectDB = async () => {
     if (isConnected || mongoose.connection.readyState === 1) {
         isConnected = true;
         return;
     }
-    
-    // Set a flag to prevent multiple connection attempts
-    if (mongoose.connection.readyState === 2) return;
-
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            serverSelectionTimeoutMS: 5000, // Timeout after 5s
-        });
+        await mongoose.connect(process.env.MONGO_URI);
         isConnected = true;
         console.log("✅ MongoDB connected (Serverless)");
     } catch (err) {
         console.error("❌ MongoDB connection error:", err);
-        // Do not throw; let the middleware handle it or fail gracefully
     }
 };
 
-// Middleware to ensure DB is connected
+// Middleware to ensure DB is connected before handling any request
 app.use(async (req, res, next) => {
     await connectDB();
     next();
 });
 
-// Health check / Status route
-app.get("/", (req, res) => {
-    res.send("Backend is responding to / (Diagnosis Mode)");
+// Redirect logic: Handles short-links
+const redirectRoutes = require("./routes/redirect");
+app.use("/api/r", redirectRoutes);
+
+// API Routes
+const urlRoutes = require("./routes/urlRoutes");
+app.use("/api/urls", urlRoutes);
+
+// Health check
+app.get("/api/health", (req, res) => {
+    res.json({ 
+        status: "Backend is running", 
+        db: isConnected ? "connected" : "disconnected",
+        env: process.env.NODE_ENV || "development" 
+    });
 });
 
 app.get("/api", (req, res) => {
-    res.json({ status: "Backend is running", environment: process.env.NODE_ENV || "development" });
+    res.json({ message: "Welcome to the LinkShort API" });
 });
-
-// Routes
-const redirectRoutes = require("./routes/redirect");
-const urlRoutes = require("./routes/urlRoutes");
-
-// These will match because vercel.json rewrites /api/(.*) to this app
-// So /api/urls becomes /urls here
-app.use("/urls", urlRoutes);
-app.use("/r", redirectRoutes);
 
 // Catch-all for undefined routes
 app.use((req, res) => {
