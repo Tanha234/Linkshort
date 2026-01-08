@@ -41,7 +41,7 @@ const Dashboard = () => {
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const API_URL = process.env.REACT_APP_API_URL || "https://linkshort-31ag.vercel.app";
   const auth = getAuth(); // Initialize auth
 
   // Fetch URLs for specific user
