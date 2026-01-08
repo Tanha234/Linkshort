@@ -51,7 +51,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <div className="flex items-center space-x-8">
               <Link to="/" className="text-[#333] hover:text-[#E2852E] font-semibold text-base transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-[#E2852E] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all">Home</Link>
-              <Link to="/about" className="text-[#333] hover:text-[#E2852E] font-semibold text-base transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-[#E2852E] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all">LinkPop</Link>
+              <Link to="/link" className="text-[#333] hover:text-[#E2852E] font-semibold text-base transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-[#E2852E] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all">LinkPop</Link>
               <button
                 onClick={handleDashboardClick}
                 className="text-[#333] hover:text-[#E2852E] font-semibold text-base transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-[#E2852E] after:left-0 after:-bottom-1 hover:after:w-full after:transition-all flex items-center gap-1"

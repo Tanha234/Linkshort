@@ -41,8 +41,17 @@ const Dashboard = () => {
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
 
-  const API_URL = process.env.REACT_APP_API_URL ||
+  let API_URL = process.env.REACT_APP_API_URL ||
     (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
+
+  // Ensure https:// prefix if missing for absolute URLs
+  if (API_URL && !API_URL.startsWith("http") && !window.location.hostname.includes("localhost")) {
+    API_URL = "https://" + API_URL;
+  }
+
+  useEffect(() => {
+    console.log("🚀 Current API URL:", API_URL);
+  }, [API_URL]);
   const auth = getAuth(); // Initialize auth
 
   // Fetch URLs for specific user

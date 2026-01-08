@@ -21,8 +21,17 @@ const ShortUrlGenerator = () => {
   const [shortUrl, setShortUrl] = useState("");
 
   const auth = getAuth();
-  const API_URL = process.env.REACT_APP_API_URL ||
+  let API_URL = process.env.REACT_APP_API_URL ||
     (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
+
+  // Ensure https:// prefix if missing for absolute URLs
+  if (API_URL && !API_URL.startsWith("http") && !window.location.hostname.includes("localhost")) {
+    API_URL = "https://" + API_URL;
+  }
+
+  React.useEffect(() => {
+    console.log("🚀 Current API URL (LinkPop):", API_URL);
+  }, [API_URL]);
 
   // Generate random short code
   const generateShortCode = () => {
@@ -190,7 +199,7 @@ const ShortUrlGenerator = () => {
                     <button onClick={() => copyToClipboard(shortCode)} className="p-3 hover:bg-[#E2852E] hover:text-white rounded-xl transition-colors">
                       <FaCopy />
                     </button>
-                    
+
                   </div>
 
                   {/* Short URL */}

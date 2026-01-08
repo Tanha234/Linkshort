@@ -32,8 +32,17 @@ const PerfectProfile = () => {
     { name: 'Sun', clicks: 430 },
   ];
 
-  const API_URL = process.env.REACT_APP_API_URL ||
+  let API_URL = process.env.REACT_APP_API_URL ||
     (window.location.hostname === "localhost" ? "http://localhost:5000" : "");
+
+  // Ensure https:// prefix if missing for absolute URLs
+  if (API_URL && !API_URL.startsWith("http") && !window.location.hostname.includes("localhost")) {
+    API_URL = "https://" + API_URL;
+  }
+
+  useEffect(() => {
+    console.log("🚀 Current API URL (Profile):", API_URL);
+  }, [API_URL]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
