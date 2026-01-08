@@ -34,6 +34,9 @@ app.use(async (req, res, next) => {
     next();
 });
 
+// IMPORTANT: Do NOT define a route for "/" here.
+// Vercel should handle "/" via vercel.json and serve your React app.
+
 // Redirect logic: Handles short-links
 const redirectRoutes = require("./routes/redirect");
 app.use("/api/r", redirectRoutes);
