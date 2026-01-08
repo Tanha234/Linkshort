@@ -47,6 +47,10 @@ app.use(async (req, res, next) => {
 });
 
 // Health check / Status route
+app.get("/", (req, res) => {
+    res.send("Backend is responding to / (Diagnosis Mode)");
+});
+
 app.get("/api", (req, res) => {
     res.json({ status: "Backend is running", environment: process.env.NODE_ENV || "development" });
 });
