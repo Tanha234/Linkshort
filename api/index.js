@@ -50,13 +50,14 @@ app.use("/api/urls", urlRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
     res.json({ 
-        status: "Backend is running (New api/ folder pattern)", 
-        env: process.env.NODE_ENV || "development" 
+        status: "Backend is running (V3-Final)", 
+        db: isConnected ? "connected" : "disconnected",
+        env: process.env.NODE_ENV || "production" 
     });
 });
 
 app.get("/api", (req, res) => {
-    res.json({ message: "Welcome to the LinkShort API (v3)" });
+    res.json({ message: "Welcome to the LinkShort API (v3-Final)" });
 });
 
 // Catch-all for undefined /api routes
