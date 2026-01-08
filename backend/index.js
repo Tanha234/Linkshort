@@ -60,14 +60,6 @@ app.use("/api", (req, res) => {
     res.status(404).json({ error: `API route not found: ${req.url}` });
 });
 
-// Diagnostic check: If this message appears on the home page, Vercel routing is failing
-app.use((req, res, next) => {
-    if (req.url === "/" || req.url === "/index.html") {
-        return res.status(200).send("DIAGNOSTIC: You are seeing the BACKEND. Vercel routing failed to show the Frontend.");
-    }
-    next();
-});
-
 // IMPORTANT: Do NOT define a global catch-all app.use((req,res) => ...) here.
 // If a route doesn't match /api, we want Express to finish so Vercel can 
 // fall back to serving the static index.html if configured.
