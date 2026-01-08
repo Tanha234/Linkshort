@@ -12,16 +12,31 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Connect to MongoDB (Cached Connection)
+// Validate Environment Variables
+if (!process.env.MONGO_URI) {
+    console.warn("⚠️ MONGO_URI is not defined in environment variables.");
+}
+
+// Connect to MongoDB (Cached Connection with Timeout)
 let isConnected = false;
 const connectDB = async () => {
-    if (isConnected) return;
+    if (isConnected || mongoose.connection.readyState === 1) {
+        isConnected = true;
+        return;
+    }
+    
+    // Set a flag to prevent multiple connection attempts
+    if (mongoose.connection.readyState === 2) return;
+
     try {
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000, // Timeout after 5s
+        });
         isConnected = true;
         console.log("✅ MongoDB connected (Serverless)");
     } catch (err) {
         console.error("❌ MongoDB connection error:", err);
+        // Do not throw; let the middleware handle it or fail gracefully
     }
 };
 

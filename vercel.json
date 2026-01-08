@@ -15,11 +15,11 @@
     ],
     "rewrites": [
         {
-            "source": "/api/(.*)",
+            "source": "/api(.*)",
             "destination": "/backend/index.js"
         },
         {
-            "source": "/((?!api/|.*\\..*).*)",
+            "source": "/((?!api|.*\\..*).*)",
             "destination": "/frontend/index.html"
         }
     ]
