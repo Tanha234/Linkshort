@@ -315,7 +315,7 @@ const Dashboard = () => {
                     <th className="px-4 py-4 w-1/3">Original URL</th>
                     <th className="px-4 py-4">Short Link</th>
                     <th className="px-4 py-4 text-center">Clicks</th>
-                    <th className="px-4 py-4">Date</th>
+                    <th className="px-4 py-4 hidden md:table-cell">Date</th>
                     <th className="px-4 py-4 text-right">Actions</th>
                   </tr>
                 </thead>
@@ -365,7 +365,7 @@ const Dashboard = () => {
                         </td>
 
                         {/* Date */}
-                        <td className="px-4 py-4 text-xs text-slate-500">
+                        <td className="px-4 py-4 text-xs text-slate-500 hidden md:table-cell">
                           {new Date(url.createdAt).toLocaleDateString()}
                         </td>
 
