@@ -12,10 +12,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Root Route - Helpful for Render/Vercel to show backend is alive
-app.get("/", (req, res) => {
+// Status Route - Helpful for Render/Vercel to show backend is alive
+app.get("/api/status", (req, res) => {
     res.json({ 
-        message: "LinkShort Backend API is running",
+        message: "LinkShort Backend API is functional",
         endpoints: {
             health: "/api/health",
             urls: "/api/urls"
