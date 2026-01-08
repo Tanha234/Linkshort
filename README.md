@@ -106,29 +106,7 @@ npm start
 ├── netlify.toml            # Netlify deployment configuration
 ├── vercel.json             # Vercel deployment configuration
 └── README.md               # Project documentation
-```
 
----
-=======
-/
-├── backend/            # Server-side logic & API
-│   ├── config/         # Database configuration
-│   ├── models/         # Mongoose Data Models (Url.js)
-│   ├── routes/         # API Routes (urlRoutes.js, redirect.js)
-│   └── index.js        # Server entry point
-├── frontend/           # Client-side React application
-│   ├── public/         # Static assets
-│   ├── src/
-│   │   ├── components/ # Reusable UI Components
-│   │   ├── pages/      # Page-level Components
-│   │   ├── App.js      # Main Application Component & Routing
-│   │   └── index.js    # React entry point
-│   ├── tailwind.config.js # Styling configuration
-│   └── package.json    # Frontend dependencies
-├── netlify.toml        # Netlify deployment configuration
-├── vercel.json         # Vercel deployment configuration
-└── README.md           # Project documentation
->>>>>>> 2a4f22522b31540f8f4bf67fd1747e17a641755b
 
 ## 📡 API Documentation
 
