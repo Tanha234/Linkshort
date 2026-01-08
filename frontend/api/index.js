@@ -12,11 +12,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Safety Root Route for Backend
-app.get("/", (req, res) => {
-    res.send("LinkShort Backend API is active.");
-});
-
 // MongoDB Connection Strategy for Serverless
 let isConnected = false;
 const connectDB = async () => {
