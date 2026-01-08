@@ -91,7 +91,7 @@ const Hero = () => {
             Fast • Secure • Analytics
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-[#2D2D2D] leading-snug md:leading-[1.1]">
-            Turn Long Links Into <span className="text-[#E2852E]">Smart Shares.</span>
+            Turn Long Links Into <span className="text-[#E2852E]">Smart Shares</span>
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 max-w-md sm:max-w-lg leading-relaxed font-medium mx-auto md:mx-0">
             Experience the next-gen URL shortener—secure, fast, and equipped with live analytics to help you grow smarter.
